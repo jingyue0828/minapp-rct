@@ -1,0 +1,2 @@
+<view bindtap="updateUserNameByComp">change name</view>
+<view>computed:{{computedName}}</view>

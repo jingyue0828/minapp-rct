@@ -1,0 +1,2 @@
+<view>computed:{{computedName}}</view>
+<comp />

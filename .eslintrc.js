@@ -1,0 +1,42 @@
+module.exports = {
+  root: true,
+  env: {
+    node: true,
+    es6: true,
+  },
+  parser: '@typescript-eslint/parser',
+  extends: ['plugin:@typescript-eslint/recommended'],
+  plugins: ['@typescript-eslint'],
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+  },
+  rules: {
+    'vue/no-parsing-error': 'off',
+    indent: 'off',
+    '@typescript-eslint/indent': ['error', 2, { ObjectExpression: 1 }],
+    '@typescript-eslint/consistent-type-definitions': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'no-public' }],
+    '@typescript-eslint/interface-name-prefix': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-floating-promises': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
+    'no-console': 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'generator-star-spacing': 'off',
+    'no-mixed-operators': 0,
+    'no-tabs': 0,
+    quotes: 'off',
+    semi: 0,
+    'no-delete-var': 2,
+    'prefer-const': [
+      2,
+      {
+        ignoreReadBeforeAssign: false,
+      },
+    ],
+    'template-curly-spacing': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+  },
+};
