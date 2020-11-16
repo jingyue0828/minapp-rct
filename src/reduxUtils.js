@@ -15,7 +15,7 @@
  * @param {Object} mudule
  * @returns {Object}
  */
-export const createModule = (module) => {
+const createModule = (module) => {
   const { initialState, reducers, name, actions, asyncActions } = module;
   const _reducer = {};
   for (const key in reducers) {
@@ -49,7 +49,7 @@ export const createModule = (module) => {
  * @param {Object} modules
  * @returns {Object}
  */
-export const combineModules = (modules) => {
+const combineModules = (modules) => {
   const _actions = {};
   const _reducers = {};
   for (const key in modules) {
@@ -60,4 +60,9 @@ export const combineModules = (modules) => {
     actions: _actions,
     reducers: _reducers,
   };
+};
+
+module.exports = {
+  createModule,
+  combineModules,
 };
