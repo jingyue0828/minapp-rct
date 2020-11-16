@@ -1,10 +1,10 @@
 {
   "name": "minapp-rct",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
-    "tag": "stable",
+    "tag": "latest",
     "access": "public"
   },
   "main": "miniprogram_dist/index.js",
