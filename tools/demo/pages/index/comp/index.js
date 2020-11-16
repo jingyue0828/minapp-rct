@@ -25,6 +25,11 @@ const component = {
       this.updateUserName('isComponentName');
     },
   },
+  lifetimes: {
+    attached() {
+      this.data.testThis = '321';
+    },
+  },
 };
 
 Component(connectComponent()(component));

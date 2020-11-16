@@ -25,6 +25,7 @@ const page = {
   onLoad() {
     this.setData({ testThis: '33' }, () => {
       console.log(this.testThis, 'this--test');
+      this.data.testThis = '44';
     });
     this.updateUserName('aa');
   },

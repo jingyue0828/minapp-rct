@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-this-alias */
 const _toString = Object.prototype.toString;
 
 /**
@@ -137,19 +138,20 @@ function connect() {
     pageObject.onLoad = function (options) {
       const _data = pageObject.data;
       const _setData = this.setData;
+      const _this = this;
       for (const key in _data) {
-        Object.defineProperty(this, key, {
+        Object.defineProperty(_this, key, {
           configurable: true,
           enumerable: false,
           set(val) {
-            this.data[key] = val;
+            _this.data[key] = val;
           },
           get() {
-            return this.data[key];
+            return _this.data[key];
           },
         });
       }
-      Object.defineProperty(this, 'setData', {
+      Object.defineProperty(_this, 'setData', {
         configurable: true,
         enumerable: true,
         writable: false,
@@ -160,16 +162,16 @@ function connect() {
           Object.keys(d).forEach((k) => {
             setPath(_data, k, d[k]);
           });
-          _setData.call(this, _data, f);
+          _setData.call(_this, _data, f);
         },
       });
       const updateData = () => {
-        const stateMap = shallowDiffData(this.data, pageObject.state(_store.getState()));
-        stateMap && this.setData(stateMap);
+        const stateMap = shallowDiffData(_this.data, pageObject.state(_store.getState()));
+        stateMap && _this.setData(stateMap);
       };
       updateData();
       unsubscribe = _store.subscribe(updateData);
-      onLoad && onLoad.call(this, options);
+      onLoad && onLoad.call(_this, options);
     };
     pageObject.onUnload = function () {
       unsubscribe && unsubscribe();
@@ -234,34 +236,35 @@ function connectComponent() {
       componentObject.detached;
     let unsubscribe = null;
     const attachedCache = function () {
+      const _this = this;
       const _data = componentObject.data;
       const _setData = this.setData;
       const _properties = componentObject.properties;
       for (const key in _data) {
-        Object.defineProperty(this, key, {
+        Object.defineProperty(_this, key, {
           configurable: true,
           enumerable: false,
           set(val) {
-            this.data[key] = val;
+            _this.data[key] = val;
           },
           get() {
-            return this.data[key];
+            return _this.data[key];
           },
         });
       }
       for (const key in _properties) {
-        Object.defineProperty(this, key, {
+        Object.defineProperty(_this, key, {
           configurable: true,
           enumerable: false,
           // set(val) {
           //   this.properties[key] = val;
           // },
           get() {
-            return this.properties[key];
+            return _this.properties[key];
           },
         });
       }
-      Object.defineProperty(this, 'setData', {
+      Object.defineProperty(_this, 'setData', {
         configurable: true,
         enumerable: true,
         writable: false,
@@ -272,16 +275,16 @@ function connectComponent() {
           Object.keys(d).forEach((k) => {
             setPath(_data, k, d[k]);
           });
-          _setData.call(this, _data, f);
+          _setData.call(_this, _data, f);
         },
       });
       const updateData = () => {
-        const stateMap = shallowDiffData(this.data, componentObject.state(_store.getState()));
-        stateMap && this.setData(stateMap);
+        const stateMap = shallowDiffData(_this.data, componentObject.state(_store.getState()));
+        stateMap && _this.setData(stateMap);
       };
       updateData();
       unsubscribe = _store.subscribe(updateData);
-      attached && attached.call(this);
+      attached && attached.call(_this);
     };
     const detachedCache = function () {
       unsubscribe && unsubscribe();
@@ -314,19 +317,20 @@ function connectBase() {
     pageObject.onLoad = function (options) {
       const _data = pageObject.data;
       const _setData = this.setData;
+      const _this = this;
       for (const key in _data) {
-        Object.defineProperty(this, key, {
+        Object.defineProperty(_this, key, {
           configurable: true,
           enumerable: false,
           set(val) {
-            this.data[key] = val;
+            _this.data[key] = val;
           },
           get() {
-            return this.data[key];
+            return _this.data[key];
           },
         });
       }
-      Object.defineProperty(this, 'setData', {
+      Object.defineProperty(_this, 'setData', {
         configurable: true,
         enumerable: true,
         writable: false,
@@ -337,10 +341,10 @@ function connectBase() {
           Object.keys(d).forEach((k) => {
             setPath(_data, k, d[k]);
           });
-          _setData.call(this, _data, f);
+          _setData.call(_this, _data, f);
         },
       });
-      onLoad && onLoad.call(this, options);
+      onLoad && onLoad.call(_this, options);
     };
     return pageObject;
   };
@@ -360,28 +364,29 @@ function connectComponentBase() {
       const _data = componentObject.data;
       const _setData = this.setData;
       const _properties = componentObject.properties;
+      const _this = this;
       for (const key in _data) {
-        Object.defineProperty(this, key, {
+        Object.defineProperty(_this, key, {
           configurable: true,
           enumerable: false,
           set(val) {
-            this.data[key] = val;
+            _this.data[key] = val;
           },
           get() {
-            return this.data[key];
+            return _this.data[key];
           },
         });
       }
       for (const key in _properties) {
-        Object.defineProperty(this, key, {
+        Object.defineProperty(_this, key, {
           configurable: true,
           enumerable: false,
           get() {
-            return this.properties[key];
+            return _this.properties[key];
           },
         });
       }
-      Object.defineProperty(this, 'setData', {
+      Object.defineProperty(_this, 'setData', {
         configurable: true,
         enumerable: true,
         writable: false,
@@ -392,10 +397,10 @@ function connectComponentBase() {
           Object.keys(d).forEach((k) => {
             setPath(_data, k, d[k]);
           });
-          _setData.call(this, _data, f);
+          _setData.call(_this, _data, f);
         },
       });
-      attached && attached.call(this);
+      attached && attached.call(_this);
     };
 
     /**
