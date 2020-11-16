@@ -305,6 +305,111 @@ function connectComponent() {
   };
 }
 
+function connectBase() {
+  return function (pageObject) {
+    if (!isObject(pageObject)) {
+      err(`component object connect accept a page object, but got a ${typeof pageObject}`);
+    }
+    const onLoad = pageObject.onLoad;
+    pageObject.onLoad = function (options) {
+      const _data = pageObject.data;
+      const _setData = this.setData;
+      for (const key in _data) {
+        Object.defineProperty(this, key, {
+          configurable: true,
+          enumerable: false,
+          set(val) {
+            this.data[key] = val;
+          },
+          get() {
+            return this.data[key];
+          },
+        });
+      }
+      Object.defineProperty(this, 'setData', {
+        configurable: true,
+        enumerable: true,
+        writable: false,
+        value: (d, f) => {
+          if (!isObject(d)) {
+            throw new TypeError('must be object');
+          }
+          Object.keys(d).forEach((k) => {
+            setPath(_data, k, d[k]);
+          });
+          _setData.call(this, _data, f);
+        },
+      });
+      onLoad && onLoad.call(this, options);
+    };
+    return pageObject;
+  };
+}
+
+function connectComponentBase() {
+  return function (componentObject) {
+    if (!isObject(componentObject)) {
+      err(
+        `component object connect accept a component object, but got a ${typeof componentObject}`,
+      );
+    }
+    const attached =
+      (componentObject.hasOwnProperty('lifetimes') && componentObject.lifetimes.attached) ||
+      componentObject.attached;
+    const attachedCache = function () {
+      const _data = componentObject.data;
+      const _setData = this.setData;
+      const _properties = componentObject.properties;
+      for (const key in _data) {
+        Object.defineProperty(this, key, {
+          configurable: true,
+          enumerable: false,
+          set(val) {
+            this.data[key] = val;
+          },
+          get() {
+            return this.data[key];
+          },
+        });
+      }
+      for (const key in _properties) {
+        Object.defineProperty(this, key, {
+          configurable: true,
+          enumerable: false,
+          get() {
+            return this.properties[key];
+          },
+        });
+      }
+      Object.defineProperty(this, 'setData', {
+        configurable: true,
+        enumerable: true,
+        writable: false,
+        value: (d, f) => {
+          if (!isObject(d)) {
+            throw new TypeError('must be object');
+          }
+          Object.keys(d).forEach((k) => {
+            setPath(_data, k, d[k]);
+          });
+          _setData.call(this, _data, f);
+        },
+      });
+      attached && attached.call(this);
+    };
+
+    /**
+     * 兼容2.2.3以下版本
+     */
+    if (componentObject.hasOwnProperty('lifetimes') && componentObject.lifetimes.attached) {
+      componentObject.lifetimes.attached = attachedCache;
+    } else {
+      componentObject.attached = attachedCache;
+    }
+    return componentObject;
+  };
+}
+
 /**
  * use Store
  * @param {Object} Store
@@ -320,5 +425,7 @@ function use(Store) {
 module.exports = {
   connect,
   connectComponent,
+  connectBase,
+  connectComponentBase,
   use,
 };
