@@ -160,9 +160,9 @@ function connect() {
             throw new TypeError('must be object');
           }
           Object.keys(d).forEach((k) => {
-            setPath(_data, k, d[k]);
+            setPath(_this.data, k, d[k]);
           });
-          _setData.call(_this, _data, f);
+          _setData.call(_this, _this.data, f);
         },
       });
       const updateData = () => {
@@ -273,9 +273,9 @@ function connectComponent() {
             throw new TypeError('must be object');
           }
           Object.keys(d).forEach((k) => {
-            setPath(_data, k, d[k]);
+            setPath(_this.data, k, d[k]);
           });
-          _setData.call(_this, _data, f);
+          _setData.call(_this, _this.data, f);
         },
       });
       const updateData = () => {
@@ -339,9 +339,9 @@ function connectBase() {
             throw new TypeError('must be object');
           }
           Object.keys(d).forEach((k) => {
-            setPath(_data, k, d[k]);
+            setPath(_this.data, k, d[k]);
           });
-          _setData.call(_this, _data, f);
+          _setData.call(_this, _this.data, f);
         },
       });
       onLoad && onLoad.call(_this, options);
@@ -395,9 +395,9 @@ function connectComponentBase() {
             throw new TypeError('must be object');
           }
           Object.keys(d).forEach((k) => {
-            setPath(_data, k, d[k]);
+            setPath(_this.data, k, d[k]);
           });
-          _setData.call(_this, _data, f);
+          _setData.call(_this, _this.data, f);
         },
       });
       attached && attached.call(_this);
