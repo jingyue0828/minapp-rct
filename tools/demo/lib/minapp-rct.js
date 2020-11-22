@@ -138,20 +138,7 @@ function connect() {
     pageObject.onLoad = function (options) {
       const _data = pageObject.data;
       const _setData = this.setData;
-      const _this = this;
-      for (const key in _data) {
-        Object.defineProperty(_this, key, {
-          configurable: true,
-          enumerable: false,
-          set(val) {
-            _this.data[key] = val;
-          },
-          get() {
-            return _this.data[key];
-          },
-        });
-      }
-      Object.defineProperty(_this, 'setData', {
+      Object.defineProperty(this, 'setData', {
         configurable: true,
         enumerable: true,
         writable: false,
@@ -160,18 +147,18 @@ function connect() {
             throw new TypeError('must be object');
           }
           Object.keys(d).forEach((k) => {
-            setPath(_this.data, k, d[k]);
+            setPath(_data, k, d[k]);
           });
-          _setData.call(_this, _this.data, f);
+          _setData.call(this, _data, f);
         },
       });
       const updateData = () => {
-        const stateMap = shallowDiffData(_this.data, pageObject.state(_store.getState()));
-        stateMap && _this.setData(stateMap);
+        const stateMap = shallowDiffData(this.data, pageObject.state(_store.getState()));
+        stateMap && this.setData(stateMap);
       };
       updateData();
       unsubscribe = _store.subscribe(updateData);
-      onLoad && onLoad.call(_this, options);
+      onLoad && onLoad.call(this, options);
     };
     pageObject.onUnload = function () {
       unsubscribe && unsubscribe();
@@ -236,35 +223,9 @@ function connectComponent() {
       componentObject.detached;
     let unsubscribe = null;
     const attachedCache = function () {
-      const _this = this;
       const _data = componentObject.data;
       const _setData = this.setData;
-      const _properties = componentObject.properties;
-      for (const key in _data) {
-        Object.defineProperty(_this, key, {
-          configurable: true,
-          enumerable: false,
-          set(val) {
-            _this.data[key] = val;
-          },
-          get() {
-            return _this.data[key];
-          },
-        });
-      }
-      for (const key in _properties) {
-        Object.defineProperty(_this, key, {
-          configurable: true,
-          enumerable: false,
-          // set(val) {
-          //   this.properties[key] = val;
-          // },
-          get() {
-            return _this.properties[key];
-          },
-        });
-      }
-      Object.defineProperty(_this, 'setData', {
+      Object.defineProperty(this, 'setData', {
         configurable: true,
         enumerable: true,
         writable: false,
@@ -273,18 +234,18 @@ function connectComponent() {
             throw new TypeError('must be object');
           }
           Object.keys(d).forEach((k) => {
-            setPath(_this.data, k, d[k]);
+            setPath(_data, k, d[k]);
           });
-          _setData.call(_this, _this.data, f);
+          _setData.call(this, _data, f);
         },
       });
       const updateData = () => {
-        const stateMap = shallowDiffData(_this.data, componentObject.state(_store.getState()));
-        stateMap && _this.setData(stateMap);
+        const stateMap = shallowDiffData(this.data, componentObject.state(_store.getState()));
+        stateMap && this.setData(stateMap);
       };
       updateData();
       unsubscribe = _store.subscribe(updateData);
-      attached && attached.call(_this);
+      attached && attached.call(this);
     };
     const detachedCache = function () {
       unsubscribe && unsubscribe();
@@ -317,20 +278,7 @@ function connectBase() {
     pageObject.onLoad = function (options) {
       const _data = pageObject.data;
       const _setData = this.setData;
-      const _this = this;
-      for (const key in _data) {
-        Object.defineProperty(_this, key, {
-          configurable: true,
-          enumerable: false,
-          set(val) {
-            _this.data[key] = val;
-          },
-          get() {
-            return _this.data[key];
-          },
-        });
-      }
-      Object.defineProperty(_this, 'setData', {
+      Object.defineProperty(this, 'setData', {
         configurable: true,
         enumerable: true,
         writable: false,
@@ -339,12 +287,12 @@ function connectBase() {
             throw new TypeError('must be object');
           }
           Object.keys(d).forEach((k) => {
-            setPath(_this.data, k, d[k]);
+            setPath(_data, k, d[k]);
           });
-          _setData.call(_this, _this.data, f);
+          _setData.call(this, _data, f);
         },
       });
-      onLoad && onLoad.call(_this, options);
+      onLoad && onLoad.call(this, options);
     };
     return pageObject;
   };
@@ -363,30 +311,7 @@ function connectComponentBase() {
     const attachedCache = function () {
       const _data = componentObject.data;
       const _setData = this.setData;
-      const _properties = componentObject.properties;
-      const _this = this;
-      for (const key in _data) {
-        Object.defineProperty(_this, key, {
-          configurable: true,
-          enumerable: false,
-          set(val) {
-            _this.data[key] = val;
-          },
-          get() {
-            return _this.data[key];
-          },
-        });
-      }
-      for (const key in _properties) {
-        Object.defineProperty(_this, key, {
-          configurable: true,
-          enumerable: false,
-          get() {
-            return _this.properties[key];
-          },
-        });
-      }
-      Object.defineProperty(_this, 'setData', {
+      Object.defineProperty(this, 'setData', {
         configurable: true,
         enumerable: true,
         writable: false,
@@ -395,12 +320,12 @@ function connectComponentBase() {
             throw new TypeError('must be object');
           }
           Object.keys(d).forEach((k) => {
-            setPath(_this.data, k, d[k]);
+            setPath(_data, k, d[k]);
           });
-          _setData.call(_this, _this.data, f);
+          _setData.call(this, _data, f);
         },
       });
-      attached && attached.call(_this);
+      attached && attached.call(this);
     };
 
     /**

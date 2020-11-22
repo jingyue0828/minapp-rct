@@ -1,6 +1,6 @@
 {
   "name": "minapp-rct",
-  "version": "1.0.7",
+  "version": "1.0.11",
   "description": "",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",

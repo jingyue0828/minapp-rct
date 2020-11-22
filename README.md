@@ -4,7 +4,6 @@ minapp-rct 是一款小程序的功能扩展插件
 
 - **Redux:** 简单配置便可在小程序中使用 [Redux](https://github.com/reduxjs/redux).
 - **计算属性:** 在 `Page` 和 `Component` 中内置了计算属性的功能.
-- **this 绑定:** 将 `data`和`properties`中的属性 直接绑定到页面实例中.
 
 ##### npm 构建
 
@@ -21,7 +20,7 @@ use()
 connect()
 //连接组件
 connectComponent()
-//未注册Store，只使用基础功能computed和this绑定，连接页面和组件
+//未注册Store，只使用基础功能computed，连接页面和组件
 connectBase()
 connectComponentBase()
 ```
@@ -72,8 +71,6 @@ const page = {
   },
   onLoad() {
     this.updateUserName('nameUpdated');
-    //data已挂载到页面实例的this下
-    console.log(this.example);
   },
 };
 
@@ -93,10 +90,6 @@ const page = {
     get computedData() {
       return this.example + ' from Page';
     },
-  },
-  onLoad() {
-    //data已挂载到页面实例的this下
-    console.log(this.example);
   },
 };
 
