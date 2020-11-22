@@ -1,2 +1,2 @@
-<view>computed:{{computedName}}</view>
+<view>{{computedName}}</view>
 <comp />

@@ -9,9 +9,6 @@ const component = {
   },
   data: {
     testThis: '123',
-    get computedName() {
-      return this.testThis + ' ' + this.userName + ' from component';
-    },
   },
   actions(dispatch, state) {
     return {
@@ -23,11 +20,6 @@ const component = {
   methods: {
     updateUserNameByComp() {
       this.updateUserName('isComponentName');
-    },
-  },
-  lifetimes: {
-    attached() {
-      this.data.testThis = '321';
     },
   },
 };

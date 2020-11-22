@@ -3,7 +3,6 @@
 minapp-rct 是一款小程序的功能扩展插件
 
 - **Redux:** 简单配置便可在小程序中使用 [Redux](https://github.com/reduxjs/redux).
-- **计算属性:** 在 `Page` 和 `Component` 中内置了计算属性的功能.
 
 ##### npm 构建
 
@@ -20,13 +19,9 @@ use()
 connect()
 //连接组件
 connectComponent()
-//未注册Store，只使用基础功能computed，连接页面和组件
-connectBase()
-connectComponentBase()
 ```
 
 在 App.js 中注册,具体配置及使用方式可查看[例子](./tools/demo/app.js).
-如果不需要 redux 可跳过这一步
 
 ```Javascript
 // app.js
@@ -39,8 +34,6 @@ App({})
 ```
 
 ##### Usage
-
-- 使用所有功能
 
 ```Javascript
 import { connect } from 'minapp-rct';
@@ -64,10 +57,6 @@ const page = {
   },
   data: {
     example: 'example',
-    // 计算属性/computed
-    get computedName() {
-      return this.example + ' ' + this.userName + ' from Page';
-    },
   },
   onLoad() {
     this.updateUserName('nameUpdated');
@@ -75,24 +64,5 @@ const page = {
 };
 
 Page(connect()(page));
-
-```
-
-- 仅使用 computed
-
-```Javascript
-import { connectBase } from 'minapp-rct';
-
-const page = {
-  data: {
-    example: 'example',
-    // 计算属性/computed
-    get computedData() {
-      return this.example + ' from Page';
-    },
-  },
-};
-
-Page(connectBase()(page));
 
 ```

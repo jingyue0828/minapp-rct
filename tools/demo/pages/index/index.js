@@ -10,9 +10,6 @@ const page = {
   },
   data: {
     testThis: '11',
-    get computedName() {
-      return this.testThis + ' ' + this.userName + ' from Page';
-    },
   },
   actions(dispatch, state) {
     return {

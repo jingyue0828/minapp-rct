@@ -136,22 +136,6 @@ function connect() {
     const onUnload = pageObject.onUnload;
     let unsubscribe = null;
     pageObject.onLoad = function (options) {
-      const _data = pageObject.data;
-      const _setData = this.setData;
-      Object.defineProperty(this, 'setData', {
-        configurable: true,
-        enumerable: true,
-        writable: false,
-        value: (d, f) => {
-          if (!isObject(d)) {
-            throw new TypeError('must be object');
-          }
-          Object.keys(d).forEach((k) => {
-            setPath(_data, k, d[k]);
-          });
-          _setData.call(this, _data, f);
-        },
-      });
       const updateData = () => {
         const stateMap = shallowDiffData(this.data, pageObject.state(_store.getState()));
         stateMap && this.setData(stateMap);
@@ -223,22 +207,6 @@ function connectComponent() {
       componentObject.detached;
     let unsubscribe = null;
     const attachedCache = function () {
-      const _data = componentObject.data;
-      const _setData = this.setData;
-      Object.defineProperty(this, 'setData', {
-        configurable: true,
-        enumerable: true,
-        writable: false,
-        value: (d, f) => {
-          if (!isObject(d)) {
-            throw new TypeError('must be object');
-          }
-          Object.keys(d).forEach((k) => {
-            setPath(_data, k, d[k]);
-          });
-          _setData.call(this, _data, f);
-        },
-      });
       const updateData = () => {
         const stateMap = shallowDiffData(this.data, componentObject.state(_store.getState()));
         stateMap && this.setData(stateMap);
@@ -269,77 +237,6 @@ function connectComponent() {
   };
 }
 
-function connectBase() {
-  return function (pageObject) {
-    if (!isObject(pageObject)) {
-      err(`component object connect accept a page object, but got a ${typeof pageObject}`);
-    }
-    const onLoad = pageObject.onLoad;
-    pageObject.onLoad = function (options) {
-      const _data = pageObject.data;
-      const _setData = this.setData;
-      Object.defineProperty(this, 'setData', {
-        configurable: true,
-        enumerable: true,
-        writable: false,
-        value: (d, f) => {
-          if (!isObject(d)) {
-            throw new TypeError('must be object');
-          }
-          Object.keys(d).forEach((k) => {
-            setPath(_data, k, d[k]);
-          });
-          _setData.call(this, _data, f);
-        },
-      });
-      onLoad && onLoad.call(this, options);
-    };
-    return pageObject;
-  };
-}
-
-function connectComponentBase() {
-  return function (componentObject) {
-    if (!isObject(componentObject)) {
-      err(
-        `component object connect accept a component object, but got a ${typeof componentObject}`,
-      );
-    }
-    const attached =
-      (componentObject.hasOwnProperty('lifetimes') && componentObject.lifetimes.attached) ||
-      componentObject.attached;
-    const attachedCache = function () {
-      const _data = componentObject.data;
-      const _setData = this.setData;
-      Object.defineProperty(this, 'setData', {
-        configurable: true,
-        enumerable: true,
-        writable: false,
-        value: (d, f) => {
-          if (!isObject(d)) {
-            throw new TypeError('must be object');
-          }
-          Object.keys(d).forEach((k) => {
-            setPath(_data, k, d[k]);
-          });
-          _setData.call(this, _data, f);
-        },
-      });
-      attached && attached.call(this);
-    };
-
-    /**
-     * 兼容2.2.3以下版本
-     */
-    if (componentObject.hasOwnProperty('lifetimes') && componentObject.lifetimes.attached) {
-      componentObject.lifetimes.attached = attachedCache;
-    } else {
-      componentObject.attached = attachedCache;
-    }
-    return componentObject;
-  };
-}
-
 /**
  * use Store
  * @param {Object} Store
@@ -355,7 +252,5 @@ function use(Store) {
 module.exports = {
   connect,
   connectComponent,
-  connectBase,
-  connectComponentBase,
   use,
 };
