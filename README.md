@@ -78,7 +78,7 @@ Page(connect()(page));
 
 ```
 
-- 仅使用 computed 和 this 绑定
+- 仅使用 computed
 
 ```Javascript
 import { connectBase } from 'minapp-rct';
